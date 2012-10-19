@@ -7,7 +7,8 @@
 
 #import "MCSegmentedControl.h"
 
-#define kDefaultCornerRadius   10.0f
+#define kDefaultCornerRadius		10.0f
+#define kDefaultStorkeColor			[UIColor colorWithWhite:120/255.0 alpha:1.0]
 
 @interface MCSegmentedControl () {
 	@private
@@ -19,12 +20,14 @@
 
 
 @implementation MCSegmentedControl
+@synthesize strokeColor;
 
 #pragma mark - Object life cycle
 
 - (void)_initialize
 {
 	self.cornerRadius = kDefaultCornerRadius;
+	self.strokeColor = kDefaultStorkeColor;
 	
 	self.selectedItemShadowColor = [UIColor colorWithWhite:0.0f alpha:.2f];
 	self.unselectedItemShadowColor = [UIColor whiteColor];
@@ -233,7 +236,6 @@
 		[self setNeedsDisplay];
 	}
 }
-
 
 #pragma mark - Overridden UISegmentedControl methods
 
@@ -569,8 +571,8 @@
 			CGContextMoveToPoint(c, itemBgRect.origin.x + .5, itemBgRect.origin.y);
 			CGContextAddLineToPoint(c, itemBgRect.origin.x + .5, itemBgRect.size.height);
 			
-			CGContextSetLineWidth(c, .5f);
-			CGContextSetStrokeColorWithColor(c, [UIColor colorWithWhite:120/255.0 alpha:1.0].CGColor);
+			CGContextSetLineWidth(c, 1.0f);
+			CGContextSetStrokeColorWithColor(c, strokeColor.CGColor);
 			CGContextStrokePath(c);
 			
 			CGContextRestoreGState(c);
@@ -613,7 +615,7 @@
 		
 		CGContextSetBlendMode(c, kCGBlendModeLighten);
 		CGContextSetStrokeColorWithColor(c,[UIColor colorWithWhite:255/255.0 alpha:1.0].CGColor);
-		CGContextSetLineWidth(c, .5f);
+		CGContextSetLineWidth(c, 1.0f);
 		CGContextStrokePath(c);
 		
 		CGContextRestoreGState(c);
@@ -625,9 +627,9 @@
 		CGContextAddArcToPoint(c, minx - .5, maxy - .5, minx - .5, midy - .5, _cornerRadius);
 		CGContextClosePath(c);
 		
-		CGContextSetBlendMode(c, kCGBlendModeMultiply);
-		CGContextSetStrokeColorWithColor(c,[UIColor colorWithWhite:30/255.0 alpha:.9].CGColor);
-		CGContextSetLineWidth(c, .5f);
+		// Stroke around the entire segment
+		CGContextSetStrokeColorWithColor(c, strokeColor.CGColor);
+		CGContextSetLineWidth(c, 1.0f);
 		CGContextStrokePath(c);
 	}
 

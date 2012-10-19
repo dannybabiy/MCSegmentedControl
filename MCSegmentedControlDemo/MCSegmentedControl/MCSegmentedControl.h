@@ -22,6 +22,8 @@
 	CGFloat _cornerRadius;
 	
 	NSArray *_unSelectedItemBackgroundGradientColors;
+	
+	UIColor *strokeColor;
 }
 
 /**
@@ -53,6 +55,7 @@
  */
 @property (nonatomic, retain) UIColor *unselectedItemShadowColor;
 
+@property (nonatomic, retain) UIColor *strokeColor;
 
 @property (nonatomic, assign) CGFloat cornerRadius;
 
